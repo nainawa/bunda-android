@@ -627,23 +627,12 @@
 			},
 
 			{
-				"key": "record_bp_using_optibp_button",
+				"key": "bp_measurement_record_optibp_spacer",
 				"openmrs_entity_parent": "",
-				"openmrs_entity": "concept",
-				"openmrs_entity_id": "",
-				"type": "optibp",
-				"label": "{{anc_physical_exam.step3.record_bp_using_optibp_button.label}}",
-				"optibp_button_bg_color": "#EB5281",
-				"optibp_button_text_color": "#FFFFFF",
-				"read_only": false,
-				"optibp_data": {
-					"clientId": "",
-					"clientOpenSRPId": ""
-				},
-				"fields_to_use_value": [
-					"bp_systolic",
-					"bp_diastolic"
-				],
+				"openmrs_entity": "",
+				"openmrs_entity_id": "spacer",
+				"type": "spacer",
+				"spacer_height": "20dp",
 				"relevance": {
 					"rules-engine": {
 						"ex-rules": {
@@ -671,7 +660,7 @@
 				}
 			},
 			{
-				"key": "bp_systolic",
+				"key": "bp_systolic_optibp",
 				"openmrs_entity_parent": "",
 				"openmrs_entity": "concept",
 				"openmrs_entity_id": "bp_systolic_optibp",
@@ -721,7 +710,7 @@
 				}
 			},
 			{
-				"key": "bp_diastolic",
+				"key": "bp_diastolic_optibp",
 				"openmrs_entity_parent": "",
 				"openmrs_entity": "concept",
 				"openmrs_entity_id": "bp_diastolic_optibp",
@@ -744,6 +733,32 @@
 					"value": "true",
 					"err": "{{anc_physical_exam.step3.bp_diastolic.v_required.err}}"
 				},
+				"relevance": {
+					"rules-engine": {
+						"ex-rules": {
+							"rules-file": "physical-exam-relevance-rules.yml"
+						}
+					}
+				}
+			},
+			{
+				"key": "record_bp_using_optibp_button",
+				"openmrs_entity_parent": "",
+				"openmrs_entity": "concept",
+				"openmrs_entity_id": "",
+				"type": "optibp",
+				"label": "{{anc_physical_exam.step3.record_bp_using_optibp_button.label}}",
+				"optibp_button_bg_color": "#EB5281",
+				"optibp_button_text_color": "#FFFFFF",
+				"read_only": false,
+				"optibp_data": {
+					"clientId": "",
+					"clientOpenSRPId": ""
+				},
+				"fields_to_use_value": [
+					"bp_systolic_optibp",
+					"bp_diastolic_optibp"
+				],
 				"relevance": {
 					"rules-engine": {
 						"ex-rules": {
@@ -826,6 +841,179 @@
 			},
 
 			{
+				"key": "bp_warning_optibp",
+				"openmrs_entity_parent": "",
+				"openmrs_entity": "",
+				"openmrs_entity_id": "",
+				"type": "toaster_notes",
+				"text": "{{anc_physical_exam.step3.bp_warning_manual.text}}",
+				"translation_text": "anc_physical_exam.step3.bp_warning_manual.text",
+				"text_color": "#D56900",
+				"toaster_type": "warning",
+				"relevance": {
+					"rules-engine": {
+						"ex-rules": {
+							"rules-file": "physical-exam-relevance-rules.yml"
+						}
+					}
+				}
+			},
+
+			{
+				"key": "bp_warning_optibp_spacer",
+				"openmrs_entity_parent": "",
+				"openmrs_entity": "",
+				"openmrs_entity_id": "spacer",
+				"type": "spacer",
+				"spacer_height": "20dp"
+			},
+
+			{
+				"key": "bp_systolic_optibp_repeat_label",
+				"type": "label",
+				"label_text_style": "bold",
+				"text": "{{anc_physical_exam.step3.bp_systolic_optibp_repeat_label.text}}",
+				"translation_text": "anc_physical_exam.step3.bp_systolic_optibp_repeat_label.text",
+				"text_color": "#000000",
+				"v_required": {
+					"value": true
+				},
+				"relevance": {
+					"rules-engine": {
+						"ex-rules": {
+							"rules-file": "physical-exam-relevance-rules.yml"
+						}
+					}
+				}
+			},
+			{
+				"key": "bp_systolic_optibp_repeat",
+				"openmrs_entity_parent": "",
+				"openmrs_entity": "concept",
+				"openmrs_entity_id": "bp_systolic_optibp_repeat",
+				"type": "normal_edit_text",
+				"edit_text_style": "bordered",
+				"edit_type": "number",
+				"v_numeric": {
+					"value": "true",
+					"err": "{{anc_physical_exam.step3.bp_systolic_optibp_repeat.v_numeric.err}}"
+				},
+				"v_min": {
+					"value": "20",
+					"err": "{{anc_physical_exam.step3.bp_systolic_optibp_repeat.v_min.err}}"
+				},
+				"v_max": {
+					"value": "260",
+					"err": "{{anc_physical_exam.step3.bp_systolic_optibp_repeat.v_max.err}}"
+				},
+				"v_required": {
+					"value": "true",
+					"err": "{{anc_physical_exam.step3.bp_systolic_optibp_repeat.v_required.err}}"
+				},
+				"relevance": {
+					"rules-engine": {
+						"ex-rules": {
+							"rules-file": "physical-exam-relevance-rules.yml"
+						}
+					}
+				}
+			},
+			{
+				"key": "bp_diastolic_optibp_repeat_label",
+				"type": "label",
+				"label_text_style": "bold",
+				"text": "{{anc_physical_exam.step3.bp_diastolic_optibp_repeat_label.text}}",
+				"translation_text": "anc_physical_exam.step3.bp_diastolic_optibp_repeat_label.text",
+				"text_color": "#000000",
+				"v_required": {
+					"value": true
+				},
+				"relevance": {
+					"rules-engine": {
+						"ex-rules": {
+							"rules-file": "physical-exam-relevance-rules.yml"
+						}
+					}
+				}
+			},
+			{
+				"key": "bp_diastolic_optibp_repeat",
+				"openmrs_entity_parent": "",
+				"openmrs_entity": "concept",
+				"openmrs_entity_id": "bp_diastolic_optibp_repeat",
+				"type": "normal_edit_text",
+				"edit_text_style": "bordered",
+				"edit_type": "number",
+				"v_numeric": {
+					"value": "true",
+					"err": "{{anc_physical_exam.step3.bp_diastolic_optibp_repeat.v_numeric.err}}"
+				},
+				"v_min": {
+					"value": "20",
+					"err": "{{anc_physical_exam.step3.bp_diastolic_optibp_repeat.v_min.err}}"
+				},
+				"v_max": {
+					"value": "260",
+					"err": "{{anc_physical_exam.step3.bp_diastolic_optibp_repeat.v_max.err}}"
+				},
+				"v_required": {
+					"value": "true",
+					"err": "{{anc_physical_exam.step3.bp_diastolic_optibp_repeat.v_required.err}}"
+				},
+				"relevance": {
+					"rules-engine": {
+						"ex-rules": {
+							"rules-file": "physical-exam-relevance-rules.yml"
+						}
+					}
+				}
+			},
+
+			{
+				"key": "record_bp_using_optibp_2nd_reading_button",
+				"openmrs_entity_parent": "",
+				"openmrs_entity": "concept",
+				"openmrs_entity_id": "",
+				"type": "optibp",
+				"label": "{{anc_physical_exam.step3.record_bp_using_optibp_2nd_reading_button.label}}",
+				"optibp_button_bg_color": "#EB5281",
+				"optibp_button_text_color": "#FFFFFF",
+				"read_only": false,
+				"optibp_data": {
+					"clientId": "",
+					"clientOpenSRPId": ""
+				},
+				"fields_to_use_value": [
+					"bp_systolic_optibp_repeat",
+					"bp_diastolic_optibp_repeat"
+				],
+				"relevance": {
+					"rules-engine": {
+						"ex-rules": {
+							"rules-file": "physical-exam-relevance-rules.yml"
+						}
+					}
+				}
+			},
+
+			{
+				"key": "bp_measurement_title_manually_top_spacer",
+				"openmrs_entity_parent": "",
+				"openmrs_entity": "",
+				"openmrs_entity_id": "spacer",
+				"type": "spacer",
+				"spacer_height": "40dp",
+				"relevance": {
+					"rules-engine": {
+						"ex-rules": {
+							"rules-file": "physical-exam-relevance-rules.yml"
+						}
+					}
+				}
+			},
+
+
+			{
 				"key": "bp_measurement_title_manually",
 				"type": "label",
 				"label_text_style": "bold",
@@ -847,7 +1035,7 @@
 				"openmrs_entity": "",
 				"openmrs_entity_id": "spacer",
 				"type": "spacer",
-				"spacer_height": "20dp",
+				"spacer_height": "40dp",
 				"relevance": {
 					"rules-engine": {
 						"ex-rules": {
@@ -1226,6 +1414,30 @@
 				"type": "spacer",
 				"spacer_height": "20sp"
 			},
+
+			{
+				"key": "bp_separator",
+				"type": "label",
+				"label_text_style": "bold",
+				"text": "***",
+				"text_color": "#EB5281",
+				"relevance": {
+					"rules-engine": {
+						"ex-rules": {
+							"rules-file": "physical-exam-relevance-rules.yml"
+						}
+					}
+				}
+			},
+
+			{
+				"key": "spacer",
+				"openmrs_entity_parent": "",
+				"openmrs_entity": "",
+				"openmrs_entity_id": "spacer",
+				"type": "spacer",
+				"spacer_height": "20sp"
+			},
 			{
 				"key": "symp_sev_preeclampsia",
 				"openmrs_entity_parent": "",
@@ -1388,32 +1600,7 @@
 
 
 
-			{
-				"key": "record_bp_using_optibp_2nd_reading_button",
-				"openmrs_entity_parent": "",
-				"openmrs_entity": "concept",
-				"openmrs_entity_id": "",
-				"type": "optibp",
-				"label": "{{anc_physical_exam.step3.record_bp_using_optibp_2nd_reading_button.label}}",
-				"optibp_button_bg_color": "#EB5281",
-				"optibp_button_text_color": "#FFFFFF",
-				"read_only": false,
-				"optibp_data": {
-					"clientId": "",
-					"clientOpenSRPId": ""
-				},
-				"fields_to_use_value": [
-					"bp_systolic_optibp",
-					"bp_diastolic_optibp"
-				],
-				"relevance": {
-					"rules-engine": {
-						"ex-rules": {
-							"rules-file": "physical-exam-relevance-rules.yml"
-						}
-					}
-				}
-			},
+
 
 
 			{

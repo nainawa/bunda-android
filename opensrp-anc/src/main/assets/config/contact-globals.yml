@@ -138,6 +138,17 @@ fields:
 ---
 form: anc_physical_exam
 fields:
+  - "bp_systolic_manual"
+  - "bp_diastolic_manual"
+  - "bp_systolic_optibp"
+  - "bp_diastolic_optibp"
+  - "bp_systolic_manual_repeat"
+  - "bp_diastolic_manual_repeat"
+  - "bp_systolic_optibp_repeat"
+  - "bp_diastolic_optibp_repeat"
+  -
+  - "muac"
+  - "muac_cat"
   - "prev_preg_comps"
   - "prev_preg_comps_value"
   - "health_conditions"

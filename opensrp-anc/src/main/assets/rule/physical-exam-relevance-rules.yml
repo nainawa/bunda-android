@@ -1,11 +1,4 @@
 ---
-name: step3_bp_systolic_optibp_label
-description: BP Systolic OptiBP Label
-priority: 1
-condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
-actions:
-  - "isRelevant = true"
----
 name: step3_bp_measurement_title_optibp
 description: BP OptiBP > Title
 priority: 1
@@ -17,6 +10,125 @@ name: step3_bp_measurement_title_optibp_spacer
 description: BP OptiBP > Title Spacer
 priority: 1
 condition: "step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_record_bp_using_optibp_button
+description: BP OptiBP > Button
+priority: 1
+condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_measurement_record_optibp_spacer
+description: BP OptiBP > Measurement Spacer
+priority: 1
+condition: "step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_systolic_optibp_label
+description: BP OptiBP > Systolic Label
+priority: 1
+condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_systolic_optibp
+description: BP OptiBP > Systolic Input
+priority: 1
+condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_diastolic_optibp_label
+description: BP OptiBP > Diastolic Label
+priority: 1
+condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_diastolic_optibp
+description: BP OptiBP > Diastolic Input
+priority: 1
+condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_cant_record_bp_optibp
+description: BP OptiBP > Can't Record Checkbox
+priority: 1
+condition: "step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_cant_record_bp_reason_opt
+description: BP OptiBP > Can't Record Reason Input
+priority: 1
+condition: "step3_bp_measurement_method.contains('optibp') && step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_warning_optibp
+description: BP OptiBP > Warning Toaster
+priority: 1
+condition: "(step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)
+        && step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_warning_optibp_spacer
+description: BP OptiBP > Warning Spacer
+priority: 1
+condition: "(step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)
+        && step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_systolic_optibp_repeat_label
+description: BP OptiBP > Systolic Repeat Label
+priority: 1
+condition: "(step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)
+        && step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_systolic_optibp_repeat
+description: BP OptiBP > Systolic Repeat Input
+priority: 1
+condition: "(step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)
+        && step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_diastolic_optibp_repeat_label
+description: BP OptiBP > Diastolic Repeat Label
+priority: 1
+condition: "(step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)
+        && step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_diastolic_optibp_repeat
+description: BP OptiBP > Diastolic Repeat Input
+priority: 1
+condition: "(step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)
+        && step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_record_bp_using_optibp_2nd_reading_button
+description: BP OptiBP > Repeat Record Button
+priority: 1
+condition: "(step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)
+        && step3_bp_measurement_method.contains('optibp')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_bp_measurement_title_manually_top_spacer
+description: BP Manually > Title Spacer
+priority: 1
+condition: "step3_bp_measurement_method.contains('manually') && step3_bp_measurement_method.contains('optibp')"
 actions:
   - "isRelevant = true"
 ---
@@ -135,67 +247,24 @@ condition: "(step3_bp_systolic_manual_repeat >= 140 || step3_bp_diastolic_manual
 actions:
   - "isRelevant = true"
 ---
+name: step3_bp_separator
+description: BP > Separator
+priority: 1
+condition: "(step3_bp_systolic_manual_repeat >= 140 || step3_bp_diastolic_manual_repeat >= 90) || (step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)"
+actions:
+  - "isRelevant = true"
+---
 name: step3_symp_sev_preeclampsia
 description: BP > Severe Pre-Ecampsia
 priority: 1
-condition: "(step3_bp_systolic_manual_repeat >= 140 || step3_bp_diastolic_manual_repeat >= 90)"
+condition: "(step3_bp_systolic_manual_repeat >= 140 || step3_bp_diastolic_manual_repeat >= 90) || (step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)"
 actions:
   - "isRelevant = true"
 ---
 name: step3_urine_protein
 description: BP > Urine Dipstick Protein
 priority: 1
-condition: "(step3_bp_systolic_manual_repeat >= 140 || step3_bp_diastolic_manual_repeat >= 90)"
-actions:
-  - "isRelevant = true"
----
-name: step3_bp_systolic
-description: BP Systolic OptiBP Value
-priority: 1
-condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
-actions:
-  - "isRelevant = true"
----
-name: step3_bp_diastolic_optibp_label
-description: BP diastolic OptiBP Label
-priority: 1
-condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
-actions:
-  - "isRelevant = true"
----
-name: step3_bp_diastolic
-description: BP diastolic OptiBP Value
-priority: 1
-condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
-actions:
-  - "isRelevant = true"
----
-name: step3_cant_record_bp_optibp
-description: BP Can't Record (OptiBP)
-priority: 1
-condition: "step3_bp_measurement_method.contains('optibp')"
-actions:
-  - "isRelevant = true"
----
-name: step3_record_bp_using_optibp_button
-description: BP Measurement Widget
-priority: 1
-condition: "step3_bp_measurement_method.contains('optibp') && !step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
-actions:
-  - "isRelevant = true"
----
-name: step3_cant_record_bp_reason_opt
-description: Cant record BP reason via OptiBP
-priority: 1
-condition: "step3_bp_measurement_method.contains('optibp') && step3_cant_record_bp_optibp.contains('cant_record_bp_optibp')"
-actions:
-  - "isRelevant = true"
----
-name: step3_bp_warning_optibp
-description: BP measurement warning toaster
-priority: 1
-condition: "(step3_bp_systolic >= 140 || step3_bp_diastolic >= 90)
-        && step3_bp_measurement_method.contains('optibp')"
+condition: "(step3_bp_systolic_manual_repeat >= 140 || step3_bp_diastolic_manual_repeat >= 90) || (step3_bp_systolic_optibp >= 140 || step3_bp_diastolic_optibp >= 90)"
 actions:
   - "isRelevant = true"
 ---
@@ -228,13 +297,6 @@ description: BP measurement
 priority: 1
 condition: "(step3_bp_systolic >= 140 || step3_bp_diastolic >= 90)
         && (step3_bp_measurement_method.contains('optibp') || step3_bp_measurement_method.contains('manually'))"
-actions:
-  - "isRelevant = true"
----
-name: step3_record_bp_using_optibp_2nd_reading_button
-description: BP measurement method 2
-priority: 1
-condition: "(step3_bp_systolic >= 140 || step3_bp_diastolic >= 90) && step3_bp_measurement_method.contains('optibp')"
 actions:
   - "isRelevant = true"
 ---

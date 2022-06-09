@@ -65,13 +65,9 @@ fields:
     relevance: "!prev_preg_comps.isEmpty() && (!prev_preg_comps.contains('dont_know') || !prev_preg_comps.contains('none'))"
     isRedFont: "true"
 
-  - template: "{{profile_overview.overview_of_pregnancy.obstetric_history.past_substances_used}}: {substances_used_value}, {substances_used_other}"
-    relevance: "(!substances_used.contains('none') && substances_used_other !='')"
+  - template: "{{profile_overview.overview_of_pregnancy.obstetric_history.past_substances_used}}: {substances_used_value},{substances_used_other}"
+    relevance: "(!substances_used.contains('none') && !substances_used.isEmpty())"
     isRedFont: "true"
-
-  - template: "{{profile_overview.overview_of_pregnancy.obstetric_history.past_substances_used}}: {substances_used_value}"
-      relevance: "(!substances_used.contains('none') && substances_used_other =='')"
-      isRedFont: "true"
 
 ---
 sub_group: medical_history
@@ -108,6 +104,32 @@ fields:
 
   - template: "{{profile_overview.overview_of_pregnancy.weight.total_weight_gain_in_pregnancy_so_far}}: {tot_weight_gain} kg"
     relevance: "tot_weight_gain != ''"
+
+---
+sub_group: muac
+fields:
+
+  - template: "{{profile_overview.muac.muac}}: {muac} cm"
+    relevance: "muac != ''"
+
+  - template: "{{profile_overview.muac.muac_cat}}: {muac_cat}"
+    relevance: "muac_cat != ''"
+
+---
+sub_group: blood_pressure
+fields:
+
+  - template: "{{profile_overview.blood_pressure.bp_manual}}: {bp_systolic_manual}/{bp_diastolic_manual} mmHg"
+    relevance: "bp_systolic_manual != '' && bp_diastolic_manual != ''"
+
+  - template: "{{profile_overview.blood_pressure.bp_optibp}}: {bp_systolic_optibp}/{bp_diastolic_optibp} mmHg"
+    relevance: "bp_systolic_optibp != '' && bp_diastolic_optibp != ''"
+
+  - template: "{{profile_overview.blood_pressure.bp_manual_10_min_rest}}: {bp_systolic_manual_repeat}/{bp_diastolic_manual_repeat} mmHg"
+    relevance: "bp_systolic_manual_repeat != '' && bp_diastolic_manual_repeat != ''"
+
+  - template: "{{profile_overview.blood_pressure.bp_optibp_10_min_rest}}: {bp_systolic_optibp_repeat}/{bp_diastolic_optibp_repeat} mmHg"
+    relevance: "bp_systolic_optibp_repeat != '' && bp_diastolic_optibp_repeat != ''"
 
 ---
 sub_group: medications
@@ -220,7 +242,7 @@ fields:
     isRedFont: "true"
 
   - template: "{{profile_overview.alcohol_substance_use}}: {alcohol_substance_use_value}"
-    relevance: "!alcohol_substance_use.isEmpty() && !alcohol_substance_use.contains('none')"
+    relevance: "!alcohol_substance_use.isEmpty() && !alcohol_substance_use.contains('none') && other_substance_use.isEmpty()"
     isRedFont: "true"
 
   - template: "{{profile_overview.mat_percept_fetal_move}}: {mat_percept_fetal_move_value}"
@@ -335,7 +357,7 @@ group: immunisation_status
 fields:
   - template: "{{profile_overview.immunisation_status.covid_vaccine_status}}: {covid_vaccine_status_value}"
     relevance: "covid_vaccine_status != ''"
-    
+
   - template: "{{profile_overview.immunisation_status.tt_immunisation_status}}: {tt_immun_status_value}"
     relevance: "tt_immun_status != ''"
     isRedFont: "tt_immun_status == 'ttcv_not_received' || tt_immun_status == 'unknown'"
@@ -346,9 +368,9 @@ fields:
   - template: "{{profile_overview.immunisation_status.tt_dose_2}}: {tt2_date_value}"
     relevance: "tt2_date == 'done_today' || tt2_date == 'done_earlier'"
 
-#  - template: "{{profile_overview.immunisation_status.flu_immunisation_status}}: {flu_immun_status_value}"
-#    relevance: "flu_immun_status != ''"
-#    isRedFont: "flu_immun_status == 'seasonal_flu_dose_missing' || flu_immun_status == 'unknown'"
+  #  - template: "{{profile_overview.immunisation_status.flu_immunisation_status}}: {flu_immun_status_value}"
+  #    relevance: "flu_immun_status != ''"
+  #    isRedFont: "flu_immun_status == 'seasonal_flu_dose_missing' || flu_immun_status == 'unknown'"
 
   - template: "{{profile_overview.immunisation_status.flu_dose}}: {flu_date_value}"
     relevance: "flu_date == 'done_today' || flu_date == 'done_earlier'"

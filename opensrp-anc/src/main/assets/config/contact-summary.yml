@@ -12,6 +12,7 @@ fields:
   relevance: "!danger_signs.isEmpty() && !danger_signs.contains('danger_none')"
 
 - template: "{{contact_summary.hospital_referral.severe_hypertension}}: {bp_systolic_repeat}/{bp_diastolic_repeat} mmHg"
+- template: "{{contact_summary.hospital_referral.severe_hypertension}}: {bp_systolic_repeat}/{bp_diastolic_repeat} mmHg"
   relevance: "severe_hypertension == 1"
 
 - template: "{{contact_summary.hospital_referral.hypertension_and_symptom_of_severe_pre_eclampsia}}: {symp_sev_preeclampsia_value}"
@@ -244,7 +245,10 @@ fields:
   relevance: "alcohol_substance_enquiry != ''"
 
 - template: "{{contact_summary.woman_behaviour.alcohol_substances_used}}: {alcohol_substance_use_value}"
-  relevance: "alcohol_substance_use != ''"
+  relevance: "alcohol_substance_use != '' && alcohol_substance_use != 'other'"
+
+- template: "{{contact_summary.woman_behaviour.alcohol_substances_used}}: {substances_used_other_value}"
+  relevance: "alcohol_substance_use == 'other'"
 
 - template: "{{contact_summary.woman_behaviour.alcohol_substances_use_counseling_done}}"
   relevance: "alcohol_substance_counsel == 'done'"
@@ -397,11 +401,14 @@ fields:
 - template: "{{contact_summary.blood_pressure.bp_manual}}: {bp_systolic_manual}/{bp_diastolic_manual} mmHg"
   relevance: "bp_systolic_manual != '' && bp_diastolic_manual != ''"
 
-- template: "{{contact_summary.blood_pressure.bp_optibp}}: {bp_systolic}/{bp_diastolic} mmHg"
-  relevance: "bp_systolic != '' && bp_diastolic != ''"
+- template: "{{contact_summary.blood_pressure.bp_optibp}}: {bp_systolic_optibp}/{bp_diastolic_optibp} mmHg"
+  relevance: "bp_systolic_optibp != '' && bp_diastolic_optibp != ''"
 
-- template: "{{contact_summary.blood_pressure.bp_10_min_rest}}: {bp_systolic_repeat}/{bp_diastolic_repeat} mmHg"
-  relevance: "bp_systolic_repeat != '' && bp_diastolic_repeat != ''"
+- template: "{{contact_summary.blood_pressure.bp_manual_10_min_rest}}: {bp_systolic_manual_repeat}/{bp_diastolic_manual_repeat} mmHg"
+  relevance: "bp_systolic_manual_repeat != '' && bp_diastolic_manual_repeat != ''"
+
+- template: "{{contact_summary.blood_pressure.bp_optibp_10_min_rest}}: {bp_systolic_optibp_repeat}/{bp_diastolic_optibp_repeat} mmHg"
+  relevance: "bp_systolic_optibp_repeat != '' && bp_diastolic_optibp_repeat != ''"
 
 - template: "{{contact_summary.blood_pressure.systptoms_pre_eclampsia}}: {symp_sev_preeclampsia_value}"
   relevance: "symp_sev_preeclampsia != ''"
