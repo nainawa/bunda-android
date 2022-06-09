@@ -115,25 +115,25 @@ fields:
 ---
 sub_group: syphilis_test_results
 fields:
-  - template: "{{profile_contact_test.syphilis_test.syphilis_test_status}}: {syph_test_status_value}"
+  - template: "{{profile_contact_test.syphilis_test.syphilis_test_status}}: {syph_test_status}"
     relevance: "syph_test_status != ''"
 
   - template: "{{profile_contact_test.syphilis_test.syphilis_test_done_date}}: {syphilis_test_date}"
     relevance: "syphilis_test_date != ''"
 
-  - template: "{{profile_contact_test.syphilis_test.syphilis_test_not_done_reason}}: {syph_test_notdone_value}"
+  - template: "{{profile_contact_test.syphilis_test.syphilis_test_not_done_reason}}: {syph_test_notdone}"
     relevance: "syph_test_notdone != ''"
 
-  - template: "{{profile_contact_test.syphilis_test.syphilis_test_not_done_other_reason}}: {syph_test_notdone_other_value}"
+  - template: "{{profile_contact_test.syphilis_test.syphilis_test_not_done_other_reason}}: {syph_test_notdone_other}"
     relevance: "syph_test_notdone_other != ''"
 
-  - template: "{{profile_contact_test.syphilis_test.syphilis_test_type}}: {syph_test_type_value}"
+  - template: "{{profile_contact_test.syphilis_test.syphilis_test_type}}: {syph_test_type}"
     relevance: "syph_test_type != ''"
 
-  - template: "{{profile_contact_test.syphilis_test.rapid_plasma_reagin_rpr_test_result}}: {rpr_syphilis_test_value}"
+  - template: "{{profile_contact_test.syphilis_test.rapid_plasma_reagin_rpr_test_result}}: {rpr_syphilis_test}"
     relevance: "rpr_syphilis_test != ''"
 
-  - template: "{{profile_contact_test.syphilis_test.Off_site_lab_test_for_syphilis_result}}: {lab_syphilis_test_value}"
+  - template: "{{profile_contact_test.syphilis_test.Off_site_lab_test_for_syphilis_result}}: {lab_syphilis_test}"
     relevance: "lab_syphilis_test != ''"
 
 ---
