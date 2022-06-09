@@ -128,7 +128,9 @@ public class ContactPresenter implements ContactContract.Presenter, ContactContr
                 JSONObject form = model.getFormAsJson(contact.getFormName(), baseEntityId, locationId);
                 if (contact.getGlobals() != null) {
                     for (Map.Entry<String, String> entry : contact.getGlobals().entrySet()) {
-                        defaultGlobals.put(entry.getKey(), entry.getValue());
+                        if (entry.getKey() != null) {
+                            defaultGlobals.put(entry.getKey(), entry.getValue());
+                        }
                     }
                 }
 
