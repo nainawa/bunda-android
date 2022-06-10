@@ -40,9 +40,9 @@ public class CharacteristicsAdapter extends RecyclerView.Adapter<Characteristics
         String label = characteristic.getLabel() != null ? characteristic.getLabel() : "";
         holder.labelTextView.setText(label);
         if (characteristic.getValue()) {
-            holder.valueTextView.setText("Yes");
+            holder.valueTextView.setText(R.string.action_yes);
         } else {
-            holder.valueTextView.setText("No");
+            holder.valueTextView.setText(R.string.action_no);
         }
         holder.info.setTag(characteristic.getKey());
         holder.info.setTag(R.id.CHARACTERISTIC_DESC, characteristic.getDescription());
