@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.vijay.jsonwizard.activities.FormConfigurationJsonFormActivity;
 import org.smartregister.anc.library.constants.ANCJsonFormConstants;
@@ -25,11 +27,14 @@ import org.smartregister.anc.library.R;
 import org.smartregister.anc.library.domain.Contact;
 import org.smartregister.anc.library.fragment.ContactWizardJsonFormFragment;
 import org.smartregister.anc.library.helper.AncRulesEngineFactory;
+import org.smartregister.anc.library.model.PartialContact;
 import org.smartregister.anc.library.util.ANCFormUtils;
 import org.smartregister.anc.library.util.ConstantsUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import timber.log.Timber;
 
@@ -144,27 +149,28 @@ public class ContactJsonFormActivity extends FormConfigurationJsonFormActivity {
 
     @Override
     public void onBackPressed() {
-        if (getmJSONObject().optString(ANCJsonFormConstants.ENCOUNTER_TYPE).equals(ConstantsUtils.JsonFormUtils.ANC_PROFILE_ENCOUNTER_TYPE)) {
-
-            int contactNo = getIntent().getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0);
-
-            // Skip validation on further contacts
-            if (contactNo > 1) {
-                proceedToMainContactPage();
-            }
-
-            else {
-                ContactWizardJsonFormFragment contactWizardJsonFormFragment = (ContactWizardJsonFormFragment) getVisibleFragment();
-                contactWizardJsonFormFragment.getPresenter().validateAndWriteValues();
-                Intent intent = new Intent();
-                intent.putExtra("formInvalidFields",
-                        getmJSONObject().optString(ANCJsonFormConstants.ENCOUNTER_TYPE) + ":" + contactWizardJsonFormFragment.getPresenter().getInvalidFields().size());
-                setResult(RESULT_OK, intent);
-            }
-
-        }
-
         proceedToMainContactPage();
+//        if (getmJSONObject().optString(ANCJsonFormConstants.ENCOUNTER_TYPE).equals(ConstantsUtils.JsonFormUtils.ANC_PROFILE_ENCOUNTER_TYPE)) {
+//
+//            int contactNo = getIntent().getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0);
+//
+//            // Skip validation on further contacts
+//            if (contactNo > 1) {
+//                proceedToMainContactPage();
+//            }
+//
+//            else {
+//                ContactWizardJsonFormFragment contactWizardJsonFormFragment = (ContactWizardJsonFormFragment) getVisibleFragment();
+//                contactWizardJsonFormFragment.getPresenter().validateAndWriteValues();
+//                Intent intent = new Intent();
+//                intent.putExtra("formInvalidFields",
+//                        getmJSONObject().optString(ANCJsonFormConstants.ENCOUNTER_TYPE) + ":" + contactWizardJsonFormFragment.getPresenter().getInvalidFields().size());
+//                setResult(RESULT_OK, intent);
+//            }
+//
+//        }
+
+        //proceedToMainContactPage();
         // new BackPressedPersistPartialTask(getContact(), this, getIntent(), currentJsonState()).execute();
     }
 
@@ -278,6 +284,7 @@ public class ContactJsonFormActivity extends FormConfigurationJsonFormActivity {
      * @author dubdabasoduba
      */
     public void proceedToMainContactPage() {
+
         Intent intent = new Intent(this, AncLibrary.getInstance().getActivityConfiguration().getMainContactActivityClass());
 
         int contactNo = getIntent().getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0);
@@ -287,12 +294,59 @@ public class ContactJsonFormActivity extends FormConfigurationJsonFormActivity {
         intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP));
         intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME));
         intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, contactNo);
+        intent.putExtra("updatedData", currentJsonState());
+        intent.putExtra("emptyRequiredFields", getEmptyRequiredFields());
         Contact contact = getContact();
         contact.setJsonForm(ancFormUtils.addFormDetails(currentJsonState()));
+
         contact.setContactNumber(contactNo);
         ANCFormUtils.persistPartial(baseEntityId, getContact());
-        this.startActivity(intent);
+
+        setResult(RESULT_OK, intent);
+        //this.startActivity(intent);
         this.finish();
+    }
+
+    // Get ArrayList of empty required fields
+    public ArrayList<String> getEmptyRequiredFields() {
+
+        String formString = currentJsonState();
+
+
+        ArrayList<String> emptyRequiredFields = new ArrayList<String>();
+
+        try {
+            JSONObject formJson = new JSONObject(formString);
+            int stepsCount = Integer.parseInt(formJson.get("count").toString());
+
+            // Parse through every steps
+            for (int stepNo = 1; stepNo <= stepsCount; stepNo++) {
+                String stepKey = "step" + stepNo;
+                JSONObject stepJson = formJson.getJSONObject(stepKey);
+                JSONArray fieldsJson = stepJson.getJSONArray("fields");
+
+                // Parse through every fields
+                for (int fieldIndex = 0; fieldIndex < fieldsJson.length(); fieldIndex++) {
+                    JSONObject field = fieldsJson.getJSONObject(fieldIndex);
+                    String key = field.getString("key");
+                    if (field.has("v_required")) {
+                        if (!field.has("value") && !field.has(("is_visible"))) {
+                            emptyRequiredFields.add(key);
+                        }
+                    }
+
+                }
+            }
+
+            //
+
+
+        }
+        catch (JSONException e) {
+            Timber.e(e);
+        }
+
+        return emptyRequiredFields;
     }
 
     /**

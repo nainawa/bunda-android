@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import org.smartregister.anc.library.constants.ANCJsonFormConstants;
@@ -35,6 +36,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -67,6 +69,8 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
 
     private String formInvalidFields = null;
 
+    HashMap<String, String> updatedData = new HashMap<String, String>();
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -87,6 +91,9 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
 
         //Enable/Disable finalize button
         findViewById(R.id.finalize_contact).setEnabled(getRequiredCountTotal() == 0);
+
+
+
     }
 
     private void initializeMainContactContainers() {
@@ -135,7 +142,10 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
             profile.setNavigationBackground(R.color.contact_profile_navigation);
             setRequiredFields(profile);
 
-            if (requiredFieldsMap.containsKey(profile.getName())) {
+            if (contactNo > 1) {
+                profile.setRequiredFields(0);
+            }
+            else if (requiredFieldsMap.containsKey(profile.getName())) {
                 Integer quickCheckFields = requiredFieldsMap.get(profile.getName());
                 profile.setRequiredFields(quickCheckFields != null ? quickCheckFields : 0);
             }
@@ -264,7 +274,7 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
                     }
                 }
                 //Make profile always complete on second contact onwards
-                requiredFieldsMap.put(ContactConstants.PROFILE, 0);
+                requiredFieldsMap.put(ConstantsUtils.JsonFormUtils.ANC_PROFILE, 0);
                 requiredFieldsMap.put(ConstantsUtils.JsonFormUtils.ANC_TEST_TASKS_ENCOUNTER_TYPE, 0);
 
             }
@@ -273,9 +283,12 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
             List<String> partialForms = new ArrayList<>(Arrays.asList(mainContactForms));
             List<PartialContact> partialContacts = getPartialContacts();
 
+
             if (partialContacts != null && partialContacts.size() > 0) {
                 for (PartialContact partialContact : partialContacts) {
+
                     if (partialContact.getFormJsonDraft() != null || partialContact.getFormJson() != null) {
+
                         object = new JSONObject(partialContact.getFormJsonDraft() != null ? partialContact.getFormJsonDraft() : partialContact.getFormJson());
                         processRequiredStepsField(object);
                         if (object.has(ConstantsUtils.JsonFormKeyUtils.ENCOUNTER_TYPE)) {
@@ -356,6 +369,7 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
             }
 
             Iterator<String> keys = object.keys();
+
             while (keys.hasNext()) {
                 String key = keys.next();
                 if (key.startsWith(RuleConstant.STEP) && !object.getJSONObject(key).has("skipped")) {
@@ -372,6 +386,7 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
                 }
             }
         }
+        Timber.i("PAMPAMA: " + requiredFieldsMap.toString());
     }
 
     private List<String> getListValues(JSONArray jsonArray) {
@@ -401,6 +416,7 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
     }
 
     private void updateFieldRequiredCount(JSONObject object, JSONObject fieldObject, boolean isRequiredField) throws JSONException {
+
         if (isRequiredField && (!fieldObject.has(ANCJsonFormConstants.VALUE) ||
                 TextUtils.isEmpty(fieldObject.getString(ANCJsonFormConstants.VALUE)))) {
             Integer requiredFieldCount = requiredFieldsMap.get(object.getString(ConstantsUtils.JsonFormKeyUtils.ENCOUNTER_TYPE));
@@ -853,7 +869,8 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-            formInvalidFields = data.getStringExtra("formInvalidFields");
+            String formName = data.getStringExtra("form_name");
+            updatedData.put(formName, data.getStringExtra("updatedData"));
         }
     }
 }
