@@ -149,29 +149,27 @@ public class ContactJsonFormActivity extends FormConfigurationJsonFormActivity {
 
     @Override
     public void onBackPressed() {
-        proceedToMainContactPage();
-//        if (getmJSONObject().optString(ANCJsonFormConstants.ENCOUNTER_TYPE).equals(ConstantsUtils.JsonFormUtils.ANC_PROFILE_ENCOUNTER_TYPE)) {
-//
-//            int contactNo = getIntent().getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0);
-//
-//            // Skip validation on further contacts
-//            if (contactNo > 1) {
-//                proceedToMainContactPage();
-//            }
-//
-//            else {
-//                ContactWizardJsonFormFragment contactWizardJsonFormFragment = (ContactWizardJsonFormFragment) getVisibleFragment();
-//                contactWizardJsonFormFragment.getPresenter().validateAndWriteValues();
-//                Intent intent = new Intent();
-//                intent.putExtra("formInvalidFields",
-//                        getmJSONObject().optString(ANCJsonFormConstants.ENCOUNTER_TYPE) + ":" + contactWizardJsonFormFragment.getPresenter().getInvalidFields().size());
-//                setResult(RESULT_OK, intent);
-//            }
-//
-//        }
+        if (getmJSONObject().optString(ANCJsonFormConstants.ENCOUNTER_TYPE).equals(ConstantsUtils.JsonFormUtils.ANC_PROFILE_ENCOUNTER_TYPE)) {
 
-        //proceedToMainContactPage();
-        // new BackPressedPersistPartialTask(getContact(), this, getIntent(), currentJsonState()).execute();
+            int contactNo = getIntent().getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0);
+
+            // Skip validation on further contacts
+            if (contactNo > 1) {
+                proceedToMainContactPage();
+            }
+
+            else {
+                ContactWizardJsonFormFragment contactWizardJsonFormFragment = (ContactWizardJsonFormFragment) getVisibleFragment();
+                contactWizardJsonFormFragment.getPresenter().validateAndWriteValues();
+                Intent intent = new Intent();
+                intent.putExtra("formInvalidFields",
+                        getmJSONObject().optString(ANCJsonFormConstants.ENCOUNTER_TYPE) + ":" + contactWizardJsonFormFragment.getPresenter().getInvalidFields().size());
+                setResult(RESULT_OK, intent);
+            }
+
+        }
+
+        proceedToMainContactPage();
     }
 
     public Contact getContact() {
@@ -294,8 +292,8 @@ public class ContactJsonFormActivity extends FormConfigurationJsonFormActivity {
         intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP));
         intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME));
         intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, contactNo);
-        intent.putExtra("updatedData", currentJsonState());
-        intent.putExtra("emptyRequiredFields", getEmptyRequiredFields());
+        //intent.putExtra("updatedData", currentJsonState());
+        //intent.putExtra("emptyRequiredFields", getEmptyRequiredFields());
         Contact contact = getContact();
         contact.setJsonForm(ancFormUtils.addFormDetails(currentJsonState()));
 
@@ -303,7 +301,7 @@ public class ContactJsonFormActivity extends FormConfigurationJsonFormActivity {
         ANCFormUtils.persistPartial(baseEntityId, getContact());
 
         setResult(RESULT_OK, intent);
-        //this.startActivity(intent);
+        this.startActivity(intent);
         this.finish();
     }
 

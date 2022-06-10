@@ -69,7 +69,7 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
 
     private String formInvalidFields = null;
 
-    HashMap<String, String> updatedData = new HashMap<String, String>();
+    // HashMap<String, String> updatedData = new HashMap<String, String>();
 
     @Override
     protected void onResume() {
@@ -869,8 +869,8 @@ public class MainContactActivity extends BaseContactActivity implements ContactC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-            String formName = data.getStringExtra("form_name");
-            updatedData.put(formName, data.getStringExtra("updatedData"));
+            // String formName = data.getStringExtra("form_name");
+            // updatedData.put(formName, data.getStringExtra("updatedData"));
         }
     }
 }
